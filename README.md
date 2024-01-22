@@ -17,6 +17,10 @@ O usuário busca produtos desejados e adiciona-os no carrinho. Ao finalizar a bu
 
 Uma vez confirmada a compra, o status da venda fica como: **“aguardando pagamento”**. Se o tempo do pagamento expirar o status da venda vai para **“cancelado”**. Caso tenha feito o pagamento, o status da venda será: **“pagamento efetuado”**.
 
+Ao efetuar o pagamento, o status do produto será alterado para **“em andamento”**
+
+Ao fazer a entrega o status do produto sera **“entregue”** e o usuário poderá fazer uma avaliação do produto e da entrega.
+
 ## Indicadores
 
 a) Qual o número de compras realizadas hoje?
@@ -65,8 +69,4 @@ v) Qual a média de compras em uma determinada loja? por dia? por mês?  por sem
 
 x)  Qual a média de compras com status: **entregue**?  por dia? por mês? por trimestre ?
 
-Ao efetuar o pagamento, o status do produto será alterado para **“em andamento”**
-
-Ao fazer a entrega o status do produto sera **“entregue”** e o usuário poderá fazer uma avaliação do produto e da entrega.
-
-
+![image](https://github.com/Fashion-Q/Sistema-De-Apoio-A-Decisao/assets/54487179/1d887151-8d4d-4cd7-a13a-55b32774b2d8)
