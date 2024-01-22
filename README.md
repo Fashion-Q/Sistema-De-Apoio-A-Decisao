@@ -23,50 +23,45 @@ Ao fazer a entrega o status do produto sera **“entregue”** e o usuário pode
 
 ## Indicadores
 
-a) Qual o número de compras realizadas hoje?
+- Qual o número de compras realizadas hoje?
+- Qual o número de de compras realizadas nos últimos dois meses ?
+- Qual o número de de compras canceladas hoje ?
+- Qual o número de compras que passaram para o status ‘Pagamento efetuado’ hoje e quantas passaram para o status “entregue”?
+- Qual a média de compras por dia ? por mês ? por semestre ?
+- Qual o número de compras por loja? por semestre ?
+- Qual o número de compras por categoria ? por trimestre?
+- Qual o número de compras em determinada categoria para uma subcategoria ? por trimestre ?
+- Qual o número de compras com status: cancelado? por dia? por mês? por trimestre ?
+- Qual o número de compras com status: pagamento efetuado? por dia? por mês? por trimestre ?
+- Qual o número de compras com status: em andamento? por dia? por mês? por trimestre ?
+- Qual o número de compras com status: entregue? por dia? por mês? por trimestre ?
+- Qual o número de compras feitas por cada usuário?
+- Qual o número de avaliações recebidas por produto de (1 à 5)? E quais não tiveram avaliações?
+- Qual a média de tempo (em dias) entre o status “em andamento” e “entregue” de um produto?
+- Qual o número de compras, cujo tempo entre “em andamento” e “entregue” ultrapassa o tempo estimado de entrega ?
+- Qual a média das vendas por categoria? Por subcategoria?
+- Quais os produtos mais requisitadas por categoria ?
+- Qual o número de compras de clientes por estado e por cidade ?
+- Qual a média de compras de clientes por Sexo em uma determinada loja?
+- Qual o número de compras de atendimentos por Faixa Etária ?
+- Qual a média de compras em uma determinada loja? por dia? por mês? por semestre ?
+- Qual a média de compras com status: entregue? por dia? por mês? por trimestre ?
+- Quais estoques não tiverem seus produtos vendidos completamente? Por loja? Por estado?
+- Qual a média de venda de produto por estoque? Por Loja? Por Época?
+- Qual estoque de produto que teve mais devoluções? Por loja?
+- Quais produtos alimentício foram passado da validade?
+- Qual media de venda de estoque por produto de uma loja por semestre? Por estado? Por Cidade?
+- Quais estoques que mais lucrou? Top 10
+- Quais estoques que menos lucrou? Top 10
+- Qual o maior estoque de produto registrado de uma loja?
+- Qual a quantidade média de produtos por estoque de uma determinada categoria? 
 
-b) Qual o número de de compras realizadas nos últimos dois meses ?
 
-c) Qual o número de de compras canceladas hoje ?
 
-d) Qual o número de compras que passaram para o status ‘Pagamento efetuado’ hoje e quantas passaram para o status “entregue”?
 
-e) Qual a média de compras por dia ? por mês ? por semestre ?
 
-f)  Qual o número de compras por loja? por semestre ?
 
-g) Qual o número de compras por categoria ? por trimestre ?
 
-h) Qual o número de compras em determinada categoria para uma subcategoria ? por trimestre ?
 
-i)  Qual o número de compras com status: **cancelado**? por dia? por mês? por trimestre ?
-
-j)  Qual o número de compras com status: **pagamento efetuado**? por dia? por mês?  por trimestre ?
-
-k) Qual o número de compras com status: **em andamento**?  por dia? por mês? por trimestre ?
-
-l)  Qual o número de compras com status: **entregue**?  por dia? por mês? por trimestre ?
-
-m) Qual o número de compras feitas por cada usuário?
-
-n)  Qual o número de avaliações recebidas por produto de (1 à 5)? E quais não tiveram avaliações?
-
-o)  Qual a média de tempo (em dias) entre o status “em andamento” e “entregue” de um produto?
-
-p)  Qual o número de compras, cujo tempo entre  “em andamento” e “entregue” ultrapassa o tempo estimado de entrega ?
-
-q)  Qual a média das vendas por categoria? Por subcategoria?
-
-r)  Quais os produtos mais requisitadas por categoria ?
-
-s) Qual o número de compras de clientes por estado e por cidade ?
-
-t) Qual a média de compras de clientes por Sexo em uma determinada loja? 
-
-u) Qual o número de compras de atendimentos por Faixa Etária ?
-
-v) Qual a média de compras em uma determinada loja? por dia? por mês?  por semestre ?
-
-x)  Qual a média de compras com status: **entregue**?  por dia? por mês? por trimestre ?
 
 ![image](https://github.com/Fashion-Q/Sistema-De-Apoio-A-Decisao/assets/54487179/1d887151-8d4d-4cd7-a13a-55b32774b2d8)
