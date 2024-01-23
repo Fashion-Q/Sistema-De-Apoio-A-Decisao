@@ -21,3 +21,10 @@ contextos que são chamados de dimensões. Diferente do OLTP, a modelagem dimens
 
 3) É um mito porque não serve apenas para varejo, a análise de dados serve também para: Finanças,
 saúde, telecomunicações, contratação de curso, educação e muitos outros.
+
+4) A diferença principal entre snowflake e star schema está na forma como organizam as tabelas em 
+um banco de dados. No esquema snowflake, as tabelas são normalizadas, ou seja, divididas em várias 
+tabelas menores para reduzir a redundância de dados. Já no esquema star, as tabelas são 
+desnormalizadas, mantendo dados relacionados em uma única tabela. O esquema snowflake tende a ter 
+mais joins, enquanto o esquema star é mais simples, facilitando consultas, mas pode resultar em 
+maior redundância de dados.
