@@ -1,0 +1,27 @@
+1) Problemas de falta de credibilidade dos dados. Falta de rastreabilidade. Falta de produtividade.
+Não transforma dados em informação.
+
+2) É um banco de dados de suporte a decisão, que integra diversas fontes de dados trabalhando
+de forma paralela ao ambiente operacional. (Desenho já feito na imagem)
+
+3) é um conjunto de dados baseados em assuntos, integrados, não-volátil, e variável  em 
+relaçãoao tempo, de apoio às decisões gerenciais.
+
+4) 
+Kimball bottom-up: 
+	Ele não acha que o focus na empresa é necessário. O data warehouse dimensional é um repositório
+	integrado de dados atômicos. Pode ser acessado diretamente. Áreas de assunto dentro do data
+	warehouse dimensional são as vezes chamadas de data marts. Data marts não precisam ser bancos
+	de dados separados.
+	
+Immon é top-down: 
+	Esquema ante-estrela. O componente de data warehouse corporativo é um repositório integrado
+	de dados atômicos. Não é acessado diretamente. Dados marts são 	reorganizado para uso de
+	deparamento/analistas.
+	
+Stand-Alone: 
+	É um data mart solo. Implementação de área de assunto sem um contexto empresarial.
+	
+
+5) ETL - Extract, Transform, Load. ETL é para extrair dados de um sistema operacional, depois
+	transforma os dados sem normalização e depois carrega os dados.
