@@ -1,0 +1,6 @@
+O que é um Data Marts?
+Um data mart é um banco de dados relacional orientado a assunto que armazena dados
+transacionais em linhas e colunas, o que facilita acessar, organizar e entender. Por conter
+dados históricos, essa estruturar torna mais fácil para um analista determinar tendências de
+dados. Os campos de dados típicos incluem ordem numérica, valor de tempo e referências a um ou
+mais objetos.
