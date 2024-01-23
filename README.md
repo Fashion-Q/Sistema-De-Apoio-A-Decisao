@@ -1,6 +1,9 @@
 # Sistema-De-Apoio-A-Decisao
 Repositorio para guardar informações da matéria de SAD
 
+**Alunos: Nadianne Galvão, Valdir Santana e Verenilson Souza**
+
+
 ## Cenário OLTP 
 
 ### Introdução
