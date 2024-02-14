@@ -1,0 +1,21 @@
+Uma empresa gerencia um sistema de vendas online. Uma venda é uma solicitação
+de um cliente para comprar produto(s) disponível(s) na loja.
+
+O usuário busca produtos desejados e adiciona-os no carrinho. Ao finalizar a
+busca de produtos, ele vai ao carrinho e seleciona a forma de pagamento
+(pixel, cartao, credito, boleto) e adiciona o CEP para verificar o valor
+do frete e descreve o endereço para entrega.
+
+Uma vez confirmado a compra, o status da venda fica como "aguardando pagamento".
+Se o tempo de pagamento expirar, o status da venda vai para "Cancelado". Caso tenha
+feito o pagamento, o status do produto vai para "em andamento". Ao fazer a entrega
+o status do produto rastreado será entregue e o usuário poderá fazer uma avaliação
+do produto e da entrega.
+
+Definição de fatos:
+Fato_venda - Uma venda é uma solicitação de um cliente para comprar produto(s) 
+disponível(s) na loja.
+
+Fato_estoque - Um estoque são produtos disponibilizado por uma determinada loja
+com uma determinada validade com uma determinada categoria e sub(s) categoria em um
+determinado dia.
