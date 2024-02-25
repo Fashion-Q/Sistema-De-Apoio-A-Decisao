@@ -1,22 +1,15 @@
 -- MySQL Workbench Synchronization
--- Generated: 2024-02-14 17:41
+-- Generated: 2024-02-25 10:55
 -- Model: New Model
 -- Version: 1.0
--- Project: Data_House
--- Author: Nadlinda, Verelindo e Valdilindo
+-- Project: Name of the project
+-- Author: profe
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 CREATE SCHEMA IF NOT EXISTS `hawkmart` DEFAULT CHARACTER SET utf8 ;
-
-CREATE TABLE IF NOT EXISTS `hawkmart`.`dim_avaliacao` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'O valor \'0\' significa que a pessoa não quis avaliar.',
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hawkmart`.`dim_categoria` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -36,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `hawkmart`.`dim_cliente` (
   `cep` VARCHAR(8) NOT NULL,
   `estado` VARCHAR(2) NOT NULL,
   `cidade` VARCHAR(80) NOT NULL,
+  `sexo` ENUM("M", "F") NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
@@ -49,13 +43,14 @@ CREATE TABLE IF NOT EXISTS `hawkmart`.`fato_estoque` (
   `produto_id` INT(11) NOT NULL,
   `loja_id` INT(11) NOT NULL,
   `data_inserido` INT(11) NOT NULL,
-  `data_validade` INT(11) NULL DEFAULT NULL,
+  `data_validade` INT(11) NOT NULL,
   `categoria_id` INT(11) NOT NULL,
   `subcategoria_id` INT(11) NOT NULL,
   `quantidadeEstoque` INT(11) NOT NULL,
   `quantidadeVendida` INT(11) NOT NULL DEFAULT '0',
   `reajustes` INT(11) NOT NULL DEFAULT '0',
   `valor` DECIMAL(10,2) NOT NULL,
+  `nome` VARCHAR(80) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_estoque_produto1_idx` (`produto_id` ASC),
   INDEX `fk_estoque_loja1_idx` (`loja_id` ASC),
@@ -125,15 +120,8 @@ CREATE TABLE IF NOT EXISTS `hawkmart`.`dim_produto` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(80) NOT NULL,
   `codigo` INT(11) NOT NULL,
-  `id_subcategoria` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `index_produto` (`nome` ASC, `codigo` ASC),
-  INDEX `fk_dim_produto_dim_subcategoria1_idx` (`id_subcategoria` ASC),
-  CONSTRAINT `fk_dim_produto_dim_subcategoria1`
-    FOREIGN KEY (`id_subcategoria`)
-    REFERENCES `hawkmart`.`dim_subcategoria` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  INDEX `index_produto` (`nome` ASC, `codigo` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
@@ -145,6 +133,7 @@ CREATE TABLE IF NOT EXISTS `hawkmart`.`dim_produtovenda` (
   `codigo` INT(11) NOT NULL,
   `desconto` DECIMAL(3,2) NOT NULL DEFAULT '1.00' COMMENT 'Para dar desconto de 15%, multiplique por 0,85. Se não tem desconto, o valor padrão permanecerá 1',
   `acao` ENUM('VENDIDO', 'DEVOLVIDO') NOT NULL DEFAULT 'VENDIDO',
+  `nome_produto` VARCHAR(80) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_produtovenda_Venda1_idx` (`Venda_id` ASC),
   INDEX `fk_produtovenda_estoque1_idx` (`estoque_id` ASC),
@@ -174,13 +163,8 @@ CREATE TABLE IF NOT EXISTS `hawkmart`.`dim_subcategoria` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(80) NOT NULL,
   `codigo` INT(11) NOT NULL,
-  `id_categoria` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_dim_subcategoria_dim_categoria1_idx` (`id_categoria` ASC),
-  INDEX `index_subcategoria` (`nome` ASC),
-  CONSTRAINT `fk_dim_subcategoria_dim_categoria1`
-    FOREIGN KEY (`id_categoria`)
-    REFERENCES `hawkmart`.`dim_categoria` (`id`))
+  INDEX `index_subcategoria` (`nome` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8;
@@ -193,21 +177,17 @@ CREATE TABLE IF NOT EXISTS `hawkmart`.`fato_venda` (
   `data_produto_entregue` INT(11) NULL DEFAULT NULL,
   `data_cancelado` INT(11) NULL DEFAULT NULL,
   `cliente_id` INT(11) NOT NULL,
-  `avaliacao_id` INT(11) NOT NULL,
   `pagamento_id` INT(11) NOT NULL,
   `status_id` INT(11) NOT NULL,
   `loja_id` INT(11) NOT NULL,
   `estoque_id` INT(11) NOT NULL,
-  `produto_id` INT(11) NOT NULL,
   `subcategoria_id` INT(11) NOT NULL,
   `categoria_id` INT(11) NOT NULL,
   `valor_total` DECIMAL(10,2) NOT NULL,
   `descricao_loja` VARCHAR(100) NULL DEFAULT NULL,
-  `descricao_cliente` VARCHAR(100) NULL DEFAULT NULL,
   `count` INT(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   INDEX `fk_Venda_cliente1_idx` (`cliente_id` ASC),
-  INDEX `fk_Venda_avaliacao1_idx` (`avaliacao_id` ASC),
   INDEX `fk_Venda_pagamento1_idx` (`pagamento_id` ASC),
   INDEX `fk_Venda_status1_idx` (`status_id` ASC),
   INDEX `fk_fato_venda_dim_tempo1_idx` (`data_aguardando_pagamento` ASC),
@@ -217,14 +197,8 @@ CREATE TABLE IF NOT EXISTS `hawkmart`.`fato_venda` (
   INDEX `fk_fato_venda_dim_tempo5_idx` (`data_cancelado` ASC),
   INDEX `fk_fato_venda_dim_loja1_idx` (`loja_id` ASC),
   INDEX `fk_fato_venda_fato_estoque1_idx` (`estoque_id` ASC),
-  INDEX `fk_fato_venda_dim_produto1_idx` (`produto_id` ASC),
   INDEX `fk_fato_venda_dim_subcategoria1_idx` (`subcategoria_id` ASC),
   INDEX `fk_fato_venda_dim_categoria1_idx` (`categoria_id` ASC),
-  CONSTRAINT `fk_Venda_avaliacao1`
-    FOREIGN KEY (`avaliacao_id`)
-    REFERENCES `hawkmart`.`dim_avaliacao` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Venda_cliente1`
     FOREIGN KEY (`cliente_id`)
     REFERENCES `hawkmart`.`dim_cliente` (`id`)
@@ -273,11 +247,6 @@ CREATE TABLE IF NOT EXISTS `hawkmart`.`fato_venda` (
   CONSTRAINT `fk_fato_venda_fato_estoque1`
     FOREIGN KEY (`estoque_id`)
     REFERENCES `hawkmart`.`fato_estoque` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_fato_venda_dim_produto1`
-    FOREIGN KEY (`produto_id`)
-    REFERENCES `hawkmart`.`dim_produto` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_fato_venda_dim_subcategoria1`

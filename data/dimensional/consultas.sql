@@ -49,3 +49,35 @@ select s.nome, count(f.count) as quantidade from fato_venda f
 join dim_subcategoria s on s.id = f.subcategoria_id
 where f.data_cancelado is null and f.data_produto_entregue is not null
 group by s.nome;
+
+# Qual o número de compras feitas por cada usuário?
+select c.nome, count(f.count) as quantidade from fato_venda f
+join dim_cliente c on c.id = f.cliente_id
+where f.data_produto_entregue is not null 
+group by c.nome;
+
+# Quais os produtos mais comprados por categoria?
+select pv.nome, count(f.count) as quantidade from fato_venda f
+join dim_produtovenda pv on pv.Venda_id = f.id
+where pv.Venda_id = f.id
+group by pv.nome;
+# Qual a média de compras de clientes do Sexo Masculino?
+select c.sexo, count(f.count)as masculino from fato_venda f
+join dim_cliente c on c.id = f.cliente_id
+where f.data_produto_entregue is not null and c.sexo = 'M'
+group by c.sexo;
+
+# Qual a média de compras de clientes do Sexo Feminino?
+select c.sexo, count(f.count)as feminino from fato_venda f
+join dim_cliente c on c.id = f.cliente_id
+where f.data_produto_entregue is not null and c.sexo = 'F'
+group by c.sexo;
+
+# Quais estoques que mais lucrou? Top 10
+select fe.id, fe.data_inserido as "Data de Inserção do Estoque", (fe.quantidadeVendida * fe.valor) as "Valor Total" from fato_estoque fe  
+order by "Valor Total" desc
+LIMIT 10;
+# Quais estoques que menos lucrou? Top 10
+select fe.id, fe.data_inserido as "Data de Inserção do Estoque", (fe.quantidadeVendida * fe.valor) as "Valor Total" from fato_estoque fe  
+order by "Valor Total" asc
+LIMIT 10;
