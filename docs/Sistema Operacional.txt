@@ -13,9 +13,22 @@ o status do produto rastreado será entregue e o usuário poderá fazer uma aval
 do produto e da entrega.
 
 Definição de fatos:
-Fato_venda - Uma venda é uma solicitação de um cliente para comprar produto(s) 
+  fato_venda - Uma venda é uma solicitação de um cliente para comprar produto(s) 
 disponível(s) na loja.
 
-Fato_estoque - Um estoque são produtos disponibilizado por uma determinada loja
+  fato_estoque - Um estoque são produtos disponibilizado por uma determinada loja
 com uma determinada validade com uma determinada categoria e sub(s) categoria em um
 determinado dia.
+
+Definição de Dimensões:
+	dim_categoria
+	dim_cliente
+	dim_categoria
+	dim_subcategoria
+	dim_produtovenda
+	dim_tempo
+	dim_loja
+	dim_produto
+	dim_pagamento
+	dim_avaliacao
+	dim_status
