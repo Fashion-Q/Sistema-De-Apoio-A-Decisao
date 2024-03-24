@@ -1,14 +1,89 @@
 use hawkmart
+
 create or alter procedure sp_fato_venda(@data_carga datetime)
 as
 begin
-insert into fato_venda 
-(id_tempo, id_avaliacao,id_pagamento, id_status, id_produto, id_loja, cod_venda, valor, desconto, acao)
-select t.ID_TEMPO, AV.COD_AVALIACAO, AV.COD_PAGAMENTO, AV.COD_STATUS, AV.COD_PRODUTO, AV.COD_LOJA,
-	   AV.COD_VENDA, AV.VALOR, AV.DESCONTO, AV.ACAO
-from tb_aux_venda av
-inner join DIM_TEMPO t on (t.data = av.data_venda)
-where av.data_carga = @data_carga
+	declare @id_tempo int, @DATA_CARGA_AUX DATETIME, @DATA_VENDA DATETIME, @id_avaliacao int, @id_pagamento int, @id_status int,
+	@id_produto int, @id_loja int,@cod_venda int, @valor numeric(10,2), @desconto decimal(3,2), @acao varchar(50)
+
+	declare c_venda cursor for
+	select DATA_CARGA, DATA_VENDA, COD_AVALIACAO, COD_PAGAMENTO, COD_STATUS, COD_PRODUTO, COD_LOJA, COD_VENDA, 
+	VALOR, DESCONTO, ACAO
+	from TB_AUX_VENDA 
+
+
+	open c_venda 
+	fetch next from c_venda into @DATA_CARGA_AUX, @DATA_VENDA, @ID_AVALIACAO, @ID_PAGAMENTO, @ID_STATUS, 
+		@ID_PRODUTO, @ID_LOJA, @COD_VENDA, @VALOR, @DESCONTO, @ACAO
+	WHILE(@@FETCH_STATUS = 0)
+	begin
+		set @id_tempo = (select id_tempo from dim_tempo where @DATA_VENDA = data)
+		IF EXISTS (SELECT 1 FROM DIM_TEMPO WHERE DATA = @DATA_VENDA) AND  @valor >= 0 AND 
+		   EXISTS(SELECT 1 FROM DIM_LOJA WHERE COD_LOJA = @id_loja) AND
+		   EXISTS(SELECT 1 FROM DIM_PRODUTO WHERE COD_PRODUTO = @id_produto) AND 
+		   EXISTS(SELECT 1 FROM DIM_PAGAMENTO WHERE COD_PAGAMENTO = @id_pagamento)
+		
+		BEGIN
+			
+			insert into fato_venda 
+			(id_tempo, id_avaliacao,id_pagamento, id_status, id_produto, 
+			 id_loja, cod_venda, valor, desconto, acao)
+			values (@id_tempo, @id_avaliacao, @id_pagamento, 
+				    @id_status, @id_produto, @id_loja, @cod_venda, @valor, @desconto, @acao)
+		END
+		ELSE
+		BEGIN
+			insert into tb_vio_venda 
+			(data_carga, data_venda, id_tempo, id_avaliacao,id_pagamento, id_status, id_produto, 
+			 id_loja, cod_venda, valor, desconto, acao, dt_erro, violacao)
+			values (@data_carga, @data_venda, @id_tempo, @id_avaliacao, @id_pagamento, 
+				    @id_status, @id_produto, @id_loja, @cod_venda, @valor, 
+					@desconto, @acao,CURRENT_TIMESTAMP,'HOUVE VIOLACAO')
+		END
+	fetch next from c_venda into @DATA_CARGA_AUX, @DATA_VENDA, @ID_AVALIACAO, @ID_PAGAMENTO, @ID_STATUS, 
+				@ID_PRODUTO, @ID_LOJA, @COD_VENDA, @VALOR, @DESCONTO, @ACAO		
+	end
+	close c_venda
+	deallocate c_venda
+end
+
+TRUNCATE TABLE fato_venda
+
+-- Teste
+UPDATE TB_AUX_VENDA 
+SET COD_PRODUTO = 100
+WHERE VALOR = 150
+
+
+exec sp_fato_venda '20230101'
+SELECT * FROM TB_AUX_VENDA
+select * from tb_vio_venda
+select * from fato_venda
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+create or alter procedure sp_fato_venda(@data_carga datetime)
+as
+begin
+	insert into fato_venda 
+	(id_tempo, id_avaliacao,id_pagamento, id_status, id_produto, id_loja, cod_venda, valor, desconto, acao)
+	select t.ID_TEMPO, AV.COD_AVALIACAO, AV.COD_PAGAMENTO, AV.COD_STATUS, AV.COD_PRODUTO, AV.COD_LOJA,
+		   AV.COD_VENDA, AV.VALOR, AV.DESCONTO, AV.ACAO
+	from tb_aux_venda av
+	inner join DIM_TEMPO t on (t.data = av.data_venda)
+	where av.data_carga = @data_carga
+
 
 end
 
@@ -24,3 +99,4 @@ select * from fato_venda
 select * from venda
 
 select * from tb_aux_venda
+*/
