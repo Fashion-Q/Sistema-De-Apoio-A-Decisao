@@ -238,7 +238,7 @@ as
 begin
     set nocount on
 	insert into VENDA (COD_CLIENTE,COD_PAGAMENTO,COD_STATUS,VALOR_TOTAL,DATA)
-	values(1,1,2,0,'20240101'),(6,4,5,0,'20240501'),
+	values(1,1,2,0,'20240101'),(6,4,5,0,'20240502')
 end
 EXEC sp_povoar_venda
 select * from VENDA

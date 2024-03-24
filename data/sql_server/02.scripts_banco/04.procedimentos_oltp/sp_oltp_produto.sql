@@ -1,4 +1,4 @@
-use dw_lowlatency
+use hawkmart
 create or alter procedure sp_oltp_produto(@data_carga datetime)
 as
 begin
