@@ -1,5 +1,12 @@
 -- Scripts ddl para o ambiente dimensional
-
+/*
+PAGAMENTO V
+PRODUTO V
+LOJA V
+VENDA
+AVALIACAO 
+STATUS 
+*/
 USE hawkmart
 
 DROP TABLE IF EXISTS FATO_VENDA

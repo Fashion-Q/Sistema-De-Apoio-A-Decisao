@@ -2,10 +2,11 @@ use dw_lowlatency
 create or alter procedure sp_oltp_produto(@data_carga datetime)
 as
 begin
-	insert into tb_aux_produto (data_carga, cod_produto, produto, cod_categoria, categoria,valor)
-	select @data_carga,p.cod_produto,p.produto,c.cod_categoria,c.categoria,p.valor
-	from tb_produto p
-	inner join tb_categoria c on (p.cod_categoria = c.cod_categoria)
+	insert into tb_aux_produto (data_carga, cod_produto, produto,COD_SUBCATEGORIA, SUBCATEGORIA, cod_categoria, categoria)
+	select @data_carga,p.cod_produto,p.produto,p.COD_SUBCATEGORIA,s.SUBCATEGORIA,s.cod_categoria,c.categoria
+	from produto p
+	inner join SUBCATEGORIA s on (s.COD_SUBCATEGORIA = p.COD_SUBCATEGORIA)
+	inner join categoria c on (c.COD_CATEGORIA = s.COD_CATEGORIA)
 end
 
 
