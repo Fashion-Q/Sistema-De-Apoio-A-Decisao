@@ -7,8 +7,6 @@ begin
 	from tb_aux_pagamento where @data_carga = data_carga
 end
 
-
-
 -- Teste
 
 exec sp_dim_pagamento '20230101'

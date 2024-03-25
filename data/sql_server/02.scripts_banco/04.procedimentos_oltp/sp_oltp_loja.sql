@@ -10,8 +10,6 @@ begin
 	
 end
 
-DROP TABLE DIM_LOJA
-
 -- Teste
 SELECT * FROM LOJA
 SELECT * FROM DIM_LOJA

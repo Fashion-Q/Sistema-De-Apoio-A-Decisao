@@ -3,8 +3,20 @@ use hawkmart
 create or alter procedure sp_fato_venda(@data_carga datetime)
 as
 begin
-	declare @id_tempo int, @DATA_CARGA_AUX DATETIME, @DATA_VENDA DATETIME, @id_avaliacao int, @id_pagamento int, @id_status int,
-	@id_produto int, @id_loja int,@cod_venda int, @valor numeric(10,2), @desconto decimal(3,2), @acao varchar(50)
+	declare @id_tempo int,
+	@DATA_CARGA_AUX DATETIME, 
+	@DATA_VENDA DATETIME,
+	@id_avaliacao int,
+	@id_pagamento int,
+	@id_status int,
+	@id_produto int, 
+	@id_loja int,
+	@cod_venda int, 
+	@valor numeric(10,2),
+	@desconto decimal(3,2),
+	@acao varchar(50),
+	@temVioacal BIT,
+	@violacaoMensagem varchar(100)
 
 	declare c_venda cursor for
 	select DATA_CARGA, DATA_VENDA, COD_AVALIACAO, COD_PAGAMENTO, COD_STATUS, COD_PRODUTO, COD_LOJA, COD_VENDA, 
@@ -17,14 +29,36 @@ begin
 		@ID_PRODUTO, @ID_LOJA, @COD_VENDA, @VALOR, @DESCONTO, @ACAO
 	WHILE(@@FETCH_STATUS = 0)
 	begin
+		set @temVioacal = 0
+		set @violacaoMensagem = ''
 		set @id_tempo = (select id_tempo from dim_tempo where @DATA_VENDA = data)
-		IF EXISTS (SELECT 1 FROM DIM_TEMPO WHERE DATA = @DATA_VENDA) AND  @valor >= 0 AND 
-		   EXISTS(SELECT 1 FROM DIM_LOJA WHERE COD_LOJA = @id_loja) AND
-		   EXISTS(SELECT 1 FROM DIM_PRODUTO WHERE COD_PRODUTO = @id_produto) AND 
-		   EXISTS(SELECT 1 FROM DIM_PAGAMENTO WHERE COD_PAGAMENTO = @id_pagamento)
-		
+		IF NOT EXISTS (SELECT 1 FROM DIM_TEMPO WHERE DATA = @DATA_VENDA)
 		BEGIN
-			
+			SET @temVioacal = 1
+			set @violacaoMensagem = @violacaoMensagem + 'DATA DIM_TEMPO fora do intervalo | '
+		END
+		IF NOT EXISTS(SELECT 1 FROM DIM_LOJA WHERE COD_LOJA = @id_loja)
+		BEGIN
+			SET @temVioacal = 1
+			set @violacaoMensagem = @violacaoMensagem + 'ID de DIM_LOJA fora do intervalo | '
+		END
+		IF NOT EXISTS(SELECT 1 FROM DIM_PRODUTO WHERE COD_PRODUTO = @id_produto)
+		BEGIN
+			SET @temVioacal = 1
+			set @violacaoMensagem = @violacaoMensagem + 'ID de DIM_PRODUTO fora do intervalo | '
+		END
+		IF NOT EXISTS(SELECT 1 FROM DIM_PAGAMENTO WHERE COD_PAGAMENTO = @id_pagamento)
+		BEGIN
+			SET @temVioacal = 1
+			set @violacaoMensagem = @violacaoMensagem + 'ID de DIM_PAGAMENTO fora do intervalo | '
+		END
+		IF @VALOR < 0
+		BEGIN
+			SET @temVioacal = 1
+			set @violacaoMensagem = @violacaoMensagem + 'PREÇO NEGATIVO | '
+		END
+		IF @temVioacal = 0
+		BEGIN
 			insert into fato_venda 
 			(id_tempo, id_avaliacao,id_pagamento, id_status, id_produto, 
 			 id_loja, cod_venda, valor, desconto, acao)
@@ -38,7 +72,7 @@ begin
 			 id_loja, cod_venda, valor, desconto, acao, dt_erro, violacao)
 			values (@data_carga, @data_venda, @id_tempo, @id_avaliacao, @id_pagamento, 
 				    @id_status, @id_produto, @id_loja, @cod_venda, @valor, 
-					@desconto, @acao,CURRENT_TIMESTAMP,'HOUVE VIOLACAO')
+					@desconto, @acao,CURRENT_TIMESTAMP,@violacaoMensagem)
 		END
 	fetch next from c_venda into @DATA_CARGA_AUX, @DATA_VENDA, @ID_AVALIACAO, @ID_PAGAMENTO, @ID_STATUS, 
 				@ID_PRODUTO, @ID_LOJA, @COD_VENDA, @VALOR, @DESCONTO, @ACAO		
@@ -46,8 +80,6 @@ begin
 	close c_venda
 	deallocate c_venda
 end
-
-TRUNCATE TABLE fato_venda
 
 -- Teste
 UPDATE TB_AUX_VENDA 

@@ -21,7 +21,6 @@
 */
 
 use hawkmart
-delete avaliacao where cod_avaliacao < 100
 DBCC CHECKIDENT (AVALIACAO, RESEED, 0);
 
 create or alter procedure sp_povoar_avaliacao
@@ -101,7 +100,6 @@ begin
 
 end
 exec sp_povar_tb_status
-
 select * from TB_STATUS
 
 create or alter procedure sp_povoar_CATEGORIA
@@ -171,8 +169,6 @@ EXEC sp_povoar_pagamento
 select * from PAGAMENTO
 
 
-
-
 create or alter procedure sp_povoar_LOJA
 as
 begin
@@ -206,25 +202,25 @@ begin
     set nocount on
   INSERT INTO ESTOQUE (COD_PRODUTO,VALOR, COD_LOJA, QUANTIDADEESTOQUE, DATA) VALUES
     (1,150, 1, FLOOR(RAND() * 21 + 10), '20240102'),(2,350, 2, FLOOR(RAND() * 21 + 10), '20240101'),
-    (3,130, 3, FLOOR(RAND() * 21 + 10), '20240103'),(4,100, 4, FLOOR(RAND() * 21 + 10), '20240101'),
-    (5,200, 5, FLOOR(RAND() * 21 + 10), '20240104'),(6,100, 6, FLOOR(RAND() * 21 + 10), '20240101'),
-    (7,120, 7, FLOOR(RAND() * 21 + 10), '20240105'),(8,160, 8, FLOOR(RAND() * 21 + 10), '20240101'),
-    (9,200, 9, FLOOR(RAND() * 21 + 10), '20240106'),(10,130, 10, FLOOR(RAND() * 21 + 10), '20240101'),
-    (11,250, 11, FLOOR(RAND() * 21 + 10), '20240107'),(12,150, 12, FLOOR(RAND() * 21 + 10), '20240101'),
-    (13,80, 13, FLOOR(RAND() * 21 + 10), '20240108'),(14,80, 14, FLOOR(RAND() * 21 + 10), '20240101'),
-    (15,450, 15, FLOOR(RAND() * 21 + 10), '20240109'),(16,1500, 1, FLOOR(RAND() * 21 + 10), '20240101'),
-    (17,750, 2, FLOOR(RAND() * 21 + 10), '20240110'),(18,1600, 3, FLOOR(RAND() * 21 + 10), '20240101'),
-    (19,3500, 4, FLOOR(RAND() * 21 + 10), '20240111'),(20,4500, 5, FLOOR(RAND() * 21 + 10), '20240101'),
-    (21,1, 6, FLOOR(RAND() * 21 + 10), '20240112'),(22,10, 7, FLOOR(RAND() * 21 + 10), '20240101'),
-    (23,6, 8, FLOOR(RAND() * 21 + 10), '20240113'),(24,10,9, FLOOR(RAND() * 21 + 10), '20240101'),
-    (25,17, 10, FLOOR(RAND() * 21 + 10), '20240801'),(26,25, 11, FLOOR(RAND() * 21 + 10), '20240101'),
-    (27,16, 12, FLOOR(RAND() * 21 + 10), '20240901'),(28,35, 13, FLOOR(RAND() * 21 + 10), '20240101'),
-    (29,75, 14, FLOOR(RAND() * 21 + 10), '20241001'),(30,90, 15, FLOOR(RAND() * 21 + 10), '20240101'),
-    (31,1300, 1, FLOOR(RAND() * 21 + 10), '20240301'),(32,1300, 2, FLOOR(RAND() * 21 + 10), '20240101'),
-    (33,500, 3, FLOOR(RAND() * 21 + 10), '20240401'),(34,175, 4, FLOOR(RAND() * 21 + 10), '20240101'),
-    (35,45, 5, FLOOR(RAND() * 21 + 10), '20240501'),(36,55, 6, FLOOR(RAND() * 21 + 10), '20240101'),
-    (37,100, 7, FLOOR(RAND() * 21 + 10), '20240601'),(37,90, 8, FLOOR(RAND() * 21 + 10), '20240101'),
-    (37,120, 9, FLOOR(RAND() * 21 + 10), '20240701'),(37,80, 10, FLOOR(RAND() * 21 + 10), '20240101');
+    (3,130, 3, FLOOR(RAND() * 21 + 10), '20240103'),(4,100, 4, FLOOR(RAND() * 21 + 10), '20240105'),
+    (5,200, 5, FLOOR(RAND() * 21 + 10), '20240104'),(6,100, 6, FLOOR(RAND() * 21 + 10), '20240111'),
+    (7,120, 7, FLOOR(RAND() * 21 + 10), '20240105'),(8,160, 8, FLOOR(RAND() * 21 + 10), '20240121'),
+    (9,200, 9, FLOOR(RAND() * 21 + 10), '20240106'),(10,130, 10, FLOOR(RAND() * 21 + 10), '20240125'),
+    (11,250, 11, FLOOR(RAND() * 21 + 10), '20240107'),(12,150, 12, FLOOR(RAND() * 21 + 10), '20240125'),
+    (13,80, 13, FLOOR(RAND() * 21 + 10), '20240108'),(14,80, 14, FLOOR(RAND() * 21 + 10), '20240201'),
+    (15,450, 15, FLOOR(RAND() * 21 + 10), '20240109'),(16,1500, 1, FLOOR(RAND() * 21 + 10), '20240221'),
+    (17,750, 2, FLOOR(RAND() * 21 + 10), '20240110'),(18,1600, 3, FLOOR(RAND() * 21 + 10), '20240301'),
+    (19,3500, 4, FLOOR(RAND() * 21 + 10), '20240111'),(20,4500, 5, FLOOR(RAND() * 21 + 10), '20240304'),
+    (21,1, 6, FLOOR(RAND() * 21 + 10), '20240112'),(22,10, 7, FLOOR(RAND() * 21 + 10), '20240405'),
+    (23,6, 8, FLOOR(RAND() * 21 + 10), '20240113'),(24,10,9, FLOOR(RAND() * 21 + 10), '20240501'),
+    (25,17, 10, FLOOR(RAND() * 21 + 10), '20240801'),(26,25, 11, FLOOR(RAND() * 21 + 10), '20240501'),
+    (27,16, 12, FLOOR(RAND() * 21 + 10), '20240901'),(28,35, 13, FLOOR(RAND() * 21 + 10), '20240505'),
+    (29,75, 14, FLOOR(RAND() * 21 + 10), '20241001'),(30,90, 15, FLOOR(RAND() * 21 + 10), '20240607'),
+    (31,1300, 1, FLOOR(RAND() * 21 + 10), '20240301'),(32,1300, 2, FLOOR(RAND() * 21 + 10), '20240901'),
+    (33,500, 3, FLOOR(RAND() * 21 + 10), '20240401'),(34,175, 4, FLOOR(RAND() * 21 + 10), '20241001'),
+    (35,45, 5, FLOOR(RAND() * 21 + 10), '20240501'),(36,55, 6, FLOOR(RAND() * 21 + 10), '20241101'),
+    (37,100, 7, FLOOR(RAND() * 21 + 10), '20240601'),(37,90, 8, FLOOR(RAND() * 21 + 10), '20241201'),
+    (37,120, 9, FLOOR(RAND() * 21 + 10), '20240701'),(1,130, 10, FLOOR(RAND() * 21 + 10), '20241212');
 end
 
 set statistics time off
@@ -260,12 +256,8 @@ as
 begin
 	insert into PRODUTOVENDA (VALOR,ACAO,COD_VENDA,COD_ESTOQUE,COD_PRODUTO,COD_AVALIACAO)
 	VALUES(150,'VENDIDO',1,1,1,5),
-		  (350,'VENDIDO',1,1,1,5),
 		  (130,'VENDIDO',1,3,3,5),
-		  (100,'VENDIDO',1,3,3,5),
 
-		  (200,'VENDIDO',2,5,5,5),
-		  (120,'VENDIDO',2,7,7,5),
 		  (200,'VENDIDO',2,5,5,5),
 		  (120,'VENDIDO',2,7,7,5)
 	UPDATE ESTOQUE
@@ -273,9 +265,9 @@ begin
 	WHERE COD_ESTOQUE = 1 OR COD_ESTOQUE = 3 OR 
 	COD_ESTOQUE = 5 OR COD_ESTOQUE = 7
 end
-
 EXEC sp_povoar_produto_venda
 select * from produtovenda
+select * from venda
 
 DBCC CHECKIDENT (PRODUTOVENDA, RESEED, 0);
 DELETE PRODUTOVENDA WHERE COD_ESTOQUE <= 100

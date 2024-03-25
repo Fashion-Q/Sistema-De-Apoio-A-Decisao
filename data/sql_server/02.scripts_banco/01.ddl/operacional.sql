@@ -1,7 +1,4 @@
 -- Scripts ddl para o ambiente operacional
-use master
-drop database if exists hawkmart
-create database hawkmart
 use hawkmart
 
 CREATE TABLE AVALIACAO(
