@@ -2,6 +2,7 @@ use hawkmart;
 create or alter procedure sp_oltp_venda(@data_carga datetime, @data_inicial datetime, @data_final datetime)
 as
 begin
+	delete tb_aux_venda where @data_carga = data_carga
 	insert into tb_aux_venda 
 	(data_carga, data_venda, COD_AVALIACAO, COD_PAGAMENTO, COD_STATUS, COD_PRODUTO, COD_LOJA,COD_VENDA, VALOR, DESCONTO, ACAO)
 	select @data_carga, V.DATA, AV.COD_AVALIACAO, V.COD_PAGAMENTO, V.COD_STATUS, AV.COD_PRODUTO, E.COD_LOJA, 
