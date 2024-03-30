@@ -19,9 +19,8 @@
 	SELECT FLOOR(RAND()*(7-1+1))+1;
 	print floor(RAND() * 7)
 */
-
 use hawkmart
-DBCC CHECKIDENT (AVALIACAO, RESEED, 0);
+DBCC CHECKIDENT (localidade, RESEED, 0);
 
 create or alter procedure sp_povoar_avaliacao
 as
@@ -37,6 +36,7 @@ begin
 end
 EXEC sp_povoar_avaliacao
 select * from AVALIACAO
+
 
 create or alter procedure sp_povoar_localidade
 as
@@ -194,7 +194,6 @@ EXEC sp_povoar_LOJA
 select * from LOJA
 
 DBCC CHECKIDENT (ESTOQUE, RESEED, 0);
-DELETE ESTOQUE WHERE COD_ESTOQUE <= 100
 
 create or alter procedure sp_povoar_estoque 
 as
@@ -234,21 +233,13 @@ as
 begin
     set nocount on
 	insert into VENDA (COD_CLIENTE,COD_PAGAMENTO,COD_STATUS,VALOR_TOTAL,DATA)
-	values(1,1,2,0,'20240101'),(6,4,5,0,'20240502')
+	values(1,1,2,0,'20240101'),
+	(2,4,5,0,'20240505'),
+	(3,4,5,0,'20240510'),
+	(4,4,5,0,'20240515')
 end
 EXEC sp_povoar_venda
 select * from VENDA
-
-/*
-insert into VENDA (COD_CLIENTE,COD_PAGAMENTO,COD_STATUS,VALOR_TOTAL,DATA)
-values(1,1,2,0,'20240101'),(6,4,5,0,'20240501'),(4,3,2,0,'20240609'),
-	(2,2,2,0,'20240416'),(15,3,2,0,'20240115'),(1,1,5,0,'20240110')
-PAGAMENTO ('DEBITO'),('CREDITO'),('PIX'),('BOLETO')
-CLIENTE DE 1 A 15
-STATUS DE 2(vENDIDO) E 5(CANCELADO)
-VALOR_TOTAL = 0
-ESCOLHA DATAS ALEATORIAS ENTRE 20240101 E 20241231 E FAÇA 25 INSERÇÕES*/	
-
 
 --VENDIDO DEVOLVIDO
 create or alter procedure sp_povoar_produto_venda
@@ -259,14 +250,40 @@ begin
 		  (130,'VENDIDO',1,3,3,5),
 
 		  (200,'VENDIDO',2,5,5,5),
-		  (120,'VENDIDO',2,7,7,5)
+		  (120,'VENDIDO',2,7,7,5),
+
+		  (200,'VENDIDO',3,5,5,5),
+		  (120,'VENDIDO',2,7,7,5),
+		  (150,'VENDIDO',2,1,1,5),
+
+		  (3500,'DEVOLVIDO',4,19,19,2)
+
+
+
 	UPDATE ESTOQUE
-	SET QUANTIDADEVENDIDA = 2 
-	WHERE COD_ESTOQUE = 1 OR COD_ESTOQUE = 3 OR 
-	COD_ESTOQUE = 5 OR COD_ESTOQUE = 7
+	SET QUANTIDADEVENDIDA = 2
+	WHERE COD_ESTOQUE = 1
+
+	UPDATE ESTOQUE
+	SET QUANTIDADEVENDIDA = 1
+	WHERE COD_ESTOQUE = 3
+
+	UPDATE ESTOQUE
+	SET QUANTIDADEVENDIDA = 2
+	WHERE COD_ESTOQUE = 5
+
+	UPDATE ESTOQUE
+	SET QUANTIDADEVENDIDA = 2
+	WHERE COD_ESTOQUE = 7
+
+	UPDATE ESTOQUE
+	SET QUANTIDADEVENDIDA = 1,REAJUSTES = 1
+	WHERE COD_ESTOQUE = 19
+
 end
 EXEC sp_povoar_produto_venda
 select * from produtovenda
+SELECT * FROM ESTOQUE
 select * from venda
 
 DBCC CHECKIDENT (PRODUTOVENDA, RESEED, 0);

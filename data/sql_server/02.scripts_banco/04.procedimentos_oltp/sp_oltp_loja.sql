@@ -12,7 +12,5 @@ begin
 end
 
 -- Teste
-SELECT * FROM LOJA
-SELECT * FROM DIM_LOJA
 exec sp_oltp_loja '20230101'
 select * from tb_aux_loja

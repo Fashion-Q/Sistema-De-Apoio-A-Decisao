@@ -1,4 +1,6 @@
 use hawkmart
+DROP PROCEDURE sp_oltp_status
+
 create or alter procedure sp_oltp_status(@data_carga datetime)
 as
 begin

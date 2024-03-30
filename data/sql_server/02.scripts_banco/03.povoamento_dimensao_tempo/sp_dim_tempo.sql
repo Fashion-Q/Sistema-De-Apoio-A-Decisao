@@ -61,8 +61,7 @@ BEGIN
 		SET @DataInicial = DATEADD(DAY,1,@DataInicial)
 	END
 END
-
-EXEC sp_dim_tempo '2024-01-01','2025-01-01'
+EXEC sp_dim_tempo '2023-01-01','2025-01-01'
 select * from dim_tempo
 
 INSERT INTO DIM_FERIADOS(DATA,DESCRICAO,TIPO)VALUES
@@ -83,7 +82,6 @@ select * from DIM_FERIADOS
 
 CREATE OR ALTER PROCEDURE so_atualiza_feriado @ANO INT AS
 BEGIN
-	print 'hello: ' + CAST(@ANO AS VARCHAR(4))
 	update DIM_TEMPO SET FL_FERIADO = 'SIM', FERIADO = f.DESCRICAO
 	from DIM_TEMPO t
 	inner join DIM_FERIADOS f on (t.DATA = f.DATA)

@@ -19,10 +19,6 @@ end
 
 -- Teste
 
-exec sp_oltp_venda '20240324', '20240101', '20241231'
+exec sp_oltp_venda '20230101', '20240101', '20241231'
 
 select * from tb_aux_venda
-
-select * from venda
-SELECT * FROM PRODUTOVENDA
-truncate table tb_aux_venda

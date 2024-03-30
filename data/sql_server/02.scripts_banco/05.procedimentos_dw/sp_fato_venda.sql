@@ -32,7 +32,7 @@ begin
 		set @temVioacal = 0
 		set @violacaoMensagem = ''
 		set @id_tempo = (select id_tempo from dim_tempo where @DATA_VENDA = data)
-		IF NOT EXISTS (SELECT 1 FROM DIM_TEMPO WHERE DATA = @DATA_VENDA)
+		IF @id_tempo IS NULL
 		BEGIN
 			SET @temVioacal = 1
 			set @violacaoMensagem = @violacaoMensagem + 'DATA DIM_TEMPO fora do intervalo | '
@@ -59,18 +59,38 @@ begin
 		END
 		IF @temVioacal = 0
 		BEGIN
-			insert into fato_venda 
-			(id_tempo, id_avaliacao,id_pagamento, id_status, id_produto, 
-			 id_loja, cod_venda, valor, desconto, acao)
-			values (@id_tempo, @id_avaliacao, @id_pagamento, 
-				    @id_status, @id_produto, @id_loja, @cod_venda, @valor, @desconto, @acao)
+			if exists(select 1 from FATO_VENDA where @DATA_VENDA = @DATA_CARGA_AUX)
+			begin
+				--Update em FATO_VENDA
+				update FATO_VENDA
+				set
+					ID_TEMPO = @id_tempo,
+					ID_AVALIACAO = @id_avaliacao,
+					ID_PAGAMENTO = @id_pagamento,
+					ID_STATUS = @id_status,
+					ID_PRODUTO = @id_produto,
+					ID_LOJA = @id_loja,
+					COD_VENDA = @cod_venda,
+					VALOR = @VALOR,
+					DESCONTO = @desconto,
+					ACAO = @acao,
+					QUANTIDADE = 1
+			end
+			else
+			begin
+				PRINT 'HELLO: ' 
+				insert into FATO_VENDA(ID_TEMPO,ID_AVALIACAO,ID_PAGAMENTO,ID_STATUS,ID_PRODUTO,ID_LOJA,COD_VENDA,VALOR,DESCONTO,ACAO,QUANTIDADE)
+				select @id_tempo,@id_avaliacao,@id_pagamento,@ID_STATUS,@ID_PRODUTO,@id_loja,@COD_VENDA,@VALOR,@DESCONTO,@ACAO,1
+				where @data_carga = @DATA_CARGA_AUX
+			end
 		END
 		ELSE
 		BEGIN
-			insert into tb_vio_venda 
-			(data_carga, data_venda, id_tempo, id_avaliacao,id_pagamento, id_status, id_produto, 
-			 id_loja, cod_venda, valor, desconto, acao, dt_erro, violacao)
-			values (@data_carga, @data_venda, @id_tempo, @id_avaliacao, @id_pagamento, 
+		SELECT * FROM TB_VIO_VENDA
+			insert into TB_VIO_VENDA 
+			(DATA_CARGA, DATA_VENDA, COD_AVALIACAO,COD_PAGAMENTO, COD_STATUS, COD_PRODUTO, 
+			 COD_LOJA, COD_VENDA, VALOR, DESCONTO, ACAO, DT_ERRO, VIOLACAO)
+			values (@data_carga, @data_venda, @id_avaliacao, @id_pagamento, 
 				    @id_status, @id_produto, @id_loja, @cod_venda, @valor, 
 					@desconto, @acao,CURRENT_TIMESTAMP,@violacaoMensagem)
 		END
@@ -81,13 +101,15 @@ begin
 	deallocate c_venda
 end
 
--- Teste
+-- Teste A TABELA DE VIOLACAO
 UPDATE TB_AUX_VENDA 
-SET COD_PRODUTO = 100
+SET COD_PRODUTO = 100, VALOR = -50
 WHERE VALOR = 150
 
 
 exec sp_fato_venda '20230101'
+
+
 SELECT * FROM TB_AUX_VENDA
 select * from tb_vio_venda
 select * from fato_venda

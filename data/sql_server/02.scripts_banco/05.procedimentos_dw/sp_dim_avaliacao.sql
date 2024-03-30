@@ -2,9 +2,17 @@ USE hawkmart
 create or alter procedure sp_dim_avaliacao(@data_carga datetime)
 as
 begin
-	insert into DIM_AVALIACAO(COD_AVALIACAO)
-	select COD_AVALIACAO
-	from TB_AUX_AVALIACAO where @data_carga = data_carga
+	DECLARE @CONTADOR INT
+	SET @CONTADOR = 0
+	while (@CONTADOR < 6)
+	BEGIN
+		IF NOT EXISTS (SELECT 1 FROM DIM_AVALIACAO WHERE COD_AVALIACAO = @CONTADOR)
+		BEGIN
+			SELECT * FROM DIM_AVALIACAO
+			insert into AVALIACAO default values
+		END
+		SET @CONTADOR = @CONTADOR + 1
+	END
 end
 -- Teste
 

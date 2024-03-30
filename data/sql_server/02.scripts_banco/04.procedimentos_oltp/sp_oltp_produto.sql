@@ -16,4 +16,3 @@ end
 exec sp_oltp_produto '20230101'
 
 select * from tb_aux_produto
-select * from produto
