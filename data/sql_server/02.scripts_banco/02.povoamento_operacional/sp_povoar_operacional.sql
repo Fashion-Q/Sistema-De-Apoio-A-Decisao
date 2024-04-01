@@ -231,14 +231,13 @@ as
 begin
     set nocount on
 	insert into VENDA (COD_CLIENTE,COD_PAGAMENTO,COD_STATUS,VALOR_TOTAL,DATA)
-	values(1,1,2,0,'20240101'),
-	(2,4,5,0,'20240505'),
-	(3,4,5,0,'20240510'),
-	(4,4,5,0,'20240515')
+	values(1,1,4,280,'20240101'),
+	(2,4,4,320,'20240505'),
+	(3,4,4,470,'20240510'),
+	(4,4,5,3500,'20240515')
 end
 EXEC sp_povoar_venda
 select * from VENDA
-
 --VENDIDO DEVOLVIDO
 create or alter procedure sp_povoar_produto_venda
 as
