@@ -10,14 +10,8 @@ begin
 	where av.data_carga = @data_carga
 	AND t.fl_feriado = 'SIM'
 end
-
-select * from tb_aux_venda
 -- Teste
 
-exec sp_fato_venda_feriadoa '20240324'
+exec sp_fato_venda_feriadoa '20230101'
 
-DROP TABLE FATO_VENDA_feriado
 select * from fato_venda_feriado
-select * from dim_tempo where id_tempo = 122
-select * from fato_venda
-select * from venda

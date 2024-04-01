@@ -28,16 +28,8 @@ begin
 end
 
 
-
 -- Teste
-
 exec sp_dim_loja '20230101'
 
 select * from dim_loja
 select * from TB_AUX_LOJA
-
-
-if exists(select 1 from DIM_LOJA where COD_LOJA IN (select COD_LOJA from TB_AUX_LOJA where '20230101' = DATA_CARGA))
-BEGIN
-	PRINT 'OI'
-END

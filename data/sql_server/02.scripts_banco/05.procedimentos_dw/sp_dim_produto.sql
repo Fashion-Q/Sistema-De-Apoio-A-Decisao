@@ -34,5 +34,3 @@ exec sp_dim_produto '20230101'
 
 select * from dim_produto
 select * from TB_AUX_PRODUTO
-
-delete from DIM_PRODUTO where ID_PRODUTO <> -1

@@ -222,8 +222,6 @@ begin
     (37,120, 9, FLOOR(RAND() * 21 + 10), '20240701'),(1,130, 10, FLOOR(RAND() * 21 + 10), '20241212');
 end
 
-set statistics time off
-set statistics io off
 exec sp_povoar_estoque
 select * from estoque
 
