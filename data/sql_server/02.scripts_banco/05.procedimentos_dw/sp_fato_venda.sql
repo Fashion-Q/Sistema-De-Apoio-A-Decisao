@@ -70,7 +70,7 @@ begin
 			values (@data_carga, @data_venda, @id_avaliacao, @id_pagamento, 
 				    @id_status, @id_produto, @id_loja, @cod_venda, @valor, 
 					@desconto, @acao,CURRENT_TIMESTAMP,@violacaoMensagem)
-			PRINT 'VIOLACAO'
+			
 		END
 	fetch next from c_venda into @DATA_CARGA_AUX, @DATA_VENDA, @ID_AVALIACAO, @ID_PAGAMENTO, @ID_STATUS, 
 				@ID_PRODUTO, @ID_LOJA, @COD_VENDA, @VALOR, @DESCONTO, @ACAO		

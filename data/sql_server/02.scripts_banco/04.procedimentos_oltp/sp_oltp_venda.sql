@@ -6,7 +6,7 @@ begin
 	insert into tb_aux_venda 
 	(data_carga, data_venda, COD_AVALIACAO, COD_PAGAMENTO, COD_STATUS, COD_PRODUTO, COD_LOJA,COD_VENDA, VALOR, DESCONTO, ACAO)
 	select @data_carga, V.DATA, AV.COD_AVALIACAO, V.COD_PAGAMENTO, V.COD_STATUS, AV.COD_PRODUTO, E.COD_LOJA, 
-		   V.COD_VENDA, AV.VALOR, AV.DESCONTO, AV.ACAO
+		   AV.COD_PRODUTOVENDA, AV.VALOR, AV.DESCONTO, AV.ACAO
 	from venda v
 	INNER JOIN PRODUTOVENDA AV 
 	ON AV.COD_VENDA = V.COD_VENDA
@@ -20,5 +20,4 @@ end
 -- Teste
 
 exec sp_oltp_venda '20230101', '20240101', '20241231'
-
 select * from tb_aux_venda

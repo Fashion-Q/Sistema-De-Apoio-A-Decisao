@@ -80,6 +80,7 @@ INSERT INTO DIM_FERIADOS(DATA,DESCRICAO,TIPO)VALUES
 ('2024-25-12','Natal','NACIONAL')
 select * from DIM_FERIADOS
 
+delete DIM_FERIADOS where ID_FERIADO <> -1
 CREATE OR ALTER PROCEDURE so_atualiza_feriado @ANO INT AS
 BEGIN
 	update DIM_TEMPO SET FL_FERIADO = 'SIM', FERIADO = f.DESCRICAO
@@ -89,3 +90,18 @@ BEGIN
 END
 
 EXEC so_atualiza_feriado 2024
+
+INSERT INTO DIM_FERIADOS(DATA,DESCRICAO,TIPO)VALUES
+('2024-01-01','Confraternização Universal','NACIONAL'),
+('2024-02-12','Carnaval','NACIONAL'),
+('2024-02-13','Carnaval','NACIONAL'),
+('2024-03-23','Paixão de Cristo','NACIONAL'),
+('2024-04-21','Tiradentes','NACIONAL'),
+('2024-05-01','Dia do Trabalho','NACIONAL'),
+('2024-05-30','Corpus Christi','NACIONAL'),
+('2024-09-07','Independência do Brasil','NACIONAL'),
+('2024-10-12','Nossa Sr. Aparecida - Padroeira do Brasil','NACIONAL'),
+('2024-11-02','Finados','NACIONAL'),
+('2024-11-15','Proclamação da República','NACIONAL'),
+('2024-11-20','Dia Nacional de Zumbi e da Consciência Negra','NACIONAL'),
+('2024-12-25','Natal','NACIONAL')

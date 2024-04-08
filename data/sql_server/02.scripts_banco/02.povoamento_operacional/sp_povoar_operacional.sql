@@ -20,7 +20,7 @@
 	print floor(RAND() * 7)
 */
 use hawkmart
-DBCC CHECKIDENT (localidade, RESEED, 0);
+DBCC CHECKIDENT (venda, RESEED, 0);
 
 create or alter procedure sp_povoar_avaliacao
 as
@@ -231,9 +231,9 @@ as
 begin
     set nocount on
 	insert into VENDA (COD_CLIENTE,COD_PAGAMENTO,COD_STATUS,VALOR_TOTAL,DATA)
-	values(1,1,4,280,'20240101'),
-	(2,4,4,320,'20240505'),
-	(3,4,4,470,'20240510'),
+	values(1,1,4,3170,'20240101'),
+	(2,4,4,2960,'20240505'),
+	(3,4,4,3487,'20240510'),
 	(4,4,5,3500,'20240515')
 end
 EXEC sp_povoar_venda
@@ -245,18 +245,40 @@ begin
 	insert into PRODUTOVENDA (VALOR,ACAO,COD_VENDA,COD_ESTOQUE,COD_PRODUTO,COD_AVALIACAO)
 	VALUES(150,'VENDIDO',1,1,1,5),
 		  (130,'VENDIDO',1,3,3,5),
+		  (200,'VENDIDO',1,5,5,5),
+		  (100,'VENDIDO',1,6,6,5),
+		  (1500,'VENDIDO',1,16,16,5),
+		  (120,'VENDIDO',1,7,7,5),
+		  (160,'VENDIDO',1,8,8,5),
+		  (200,'VENDIDO',1,9,9,5),
+		  (130,'VENDIDO',1,10,10,5),
+		  (250,'VENDIDO',1,11,11,5),
+		  (150,'VENDIDO',1,12,12,5),
+		  (80,'VENDIDO',1,13,13,5),
 
 		  (200,'VENDIDO',2,5,5,5),
 		  (120,'VENDIDO',2,7,7,5),
+		  (80,'VENDIDO',2,14,14,5),
+		  (450,'VENDIDO',2,15,15,5),
+		  (1500,'VENDIDO',2,16,16,5),
+		  (130,'VENDIDO',2,10,10,5),
+		  (250,'VENDIDO',2,11,11,5),
+		  (150,'VENDIDO',2,12,12,5),
+		  (80,'VENDIDO',2,13,13,5),
 
 		  (200,'VENDIDO',3,5,5,5),
-		  (120,'VENDIDO',2,7,7,5),
-		  (150,'VENDIDO',2,1,1,5),
+		  (120,'VENDIDO',3,7,7,5),
+		  (150,'VENDIDO',3,1,1,5),
+		  (3500,'VENDIDO',3,19,19,5),
+		  (4500,'VENDIDO',3,20,20,5),
+		  (1,'VENDIDO',3,21,21,5),
+		  (10,'VENDIDO',3,22,22,5),
+		  (6,'VENDIDO',3,23,23,5),
 
 		  (3500,'DEVOLVIDO',4,19,19,2)
 
 
-
+/*
 	UPDATE ESTOQUE
 	SET QUANTIDADEVENDIDA = 2
 	WHERE COD_ESTOQUE = 1
@@ -275,13 +297,16 @@ begin
 
 	UPDATE ESTOQUE
 	SET QUANTIDADEVENDIDA = 1,REAJUSTES = 1
-	WHERE COD_ESTOQUE = 19
+	WHERE COD_ESTOQUE = 19*/
 
 end
 EXEC sp_povoar_produto_venda
 select * from produtovenda
 SELECT * FROM ESTOQUE
 select * from venda
+
+DBCC CHECKIDENT (VENDA, RESEED, 0);
+DELETE VENDA WHERE COD_VENDA <> 0
 
 DBCC CHECKIDENT (PRODUTOVENDA, RESEED, 0);
 DELETE PRODUTOVENDA WHERE COD_ESTOQUE <= 100
